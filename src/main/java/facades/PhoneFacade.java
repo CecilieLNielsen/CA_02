@@ -1,36 +1,40 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package facades;
 
-import DTO.PersonDTO;
+import DTO.PhoneDTO;
 import entities.Person;
+import entities.Phone;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 /**
  *
- * Rename Class to a relevant name Add add relevant facade methods
+ * @author hassanainali
  */
-public class PersonFacade {
-
-    private static PersonFacade instance;
+public class PhoneFacade {
+    
+    private static PhoneFacade instance;
     private static EntityManagerFactory emf;
     
     //Private Constructor to ensure Singleton
-    private PersonFacade() {}
-    
+    private PhoneFacade() {}
     
     /**
      * 
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static PersonFacade getFacade(EntityManagerFactory _emf) {
+    public static PhoneFacade getFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new PersonFacade();
+            instance = new PhoneFacade();
         }
         return instance;
     }
@@ -40,50 +44,49 @@ public class PersonFacade {
     }
     
     //TODO Remove/Change this before use
-    public PersonDTO getUserById(int id){
+    public PhoneDTO getPhoneByNumber(int id){
         EntityManager em = emf.createEntityManager();
         try{
             em.getTransaction().begin();
-            PersonDTO pDTO = new PersonDTO(em.find(Person.class, id));
+            PhoneDTO phDTO = new PhoneDTO(em.find(Phone.class, id));
             em.getTransaction().commit();
-            return pDTO;
+            return phDTO;
+        }finally{  
+            em.close();
+        }
+    }
+    /*
+    public String addPhone(PhoneDTO phDTO){
+        EntityManager em = emf.createEntityManager();
+        try{
+            em.getTransaction().begin();
+            em.persist(new Phone(phDTO.getNumber(), phDTO.getDescription()));
+            em.getTransaction().commit();
+            return "Phone added successfully. ";
+        }finally{  
+            em.close();
+        }
+    }
+    */
+    public String deletePhone(int id){
+        EntityManager em = emf.createEntityManager();
+        try{
+            em.getTransaction().begin();
+            em.remove(em.find(Phone.class, id));
+            em.getTransaction().commit();
+            return "Phone deleted successfully. ";
         }finally{  
             em.close();
         }
     }
     
-    public String addPerson(PersonDTO pDTO){
+    public List<PhoneDTO> allPhones(){
         EntityManager em = emf.createEntityManager();
-        try{
-            em.getTransaction().begin();
-            em.persist(new Person(pDTO.getEmail(), pDTO.getFirstName(), pDTO.getLastName()));
-            em.getTransaction().commit();
-            return "Person added successfully. ";
-        }finally{  
-            em.close();
+        TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p", Phone.class);
+        List<PhoneDTO> phones = new ArrayList();
+        for(Phone p : query.getResultList()){
+            phones.add(new PhoneDTO(p));
         }
+        return phones;
     }
-    
-    public String deletePerson(int id){
-        EntityManager em = emf.createEntityManager();
-        try{
-            em.getTransaction().begin();
-            em.remove(em.find(Person.class, id));
-            em.getTransaction().commit();
-            return "Person deleted successfully. ";
-        }finally{  
-            em.close();
-        }
-    }
-    
-    public List<PersonDTO> allPersons(){
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-        List<PersonDTO> persons = new ArrayList();
-        for(Person p : query.getResultList()){
-            persons.add(new PersonDTO(p));
-        }
-        return persons;
-    }
-    
 }
