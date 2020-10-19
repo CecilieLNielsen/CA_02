@@ -16,7 +16,7 @@ public class PersonResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
        
-    private static final PersonFacade FACADE =  PersonFacade.getFacadeExample(EMF);
+    private static final PersonFacade FACADE =  PersonFacade.getFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
 
