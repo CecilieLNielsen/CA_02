@@ -36,17 +36,7 @@ public class FacadeExampleTest {
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(new Person("Some txt", "More text"));
-            em.persist(new Person("aaa", "bbb"));
-
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
+     
     }
 
     @AfterEach
@@ -55,9 +45,9 @@ public class FacadeExampleTest {
     }
 
     // TODO: Delete or change this method 
-    @Test
+    /*@Test
     public void testAFacadeMethod() {
         assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
-    }
+    }*/
 
 }

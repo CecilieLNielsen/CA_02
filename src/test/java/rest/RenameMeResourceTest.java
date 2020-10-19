@@ -63,18 +63,6 @@ public class RenameMeResourceTest {
     //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
     public void setUp() {
-        EntityManager em = emf.createEntityManager();
-        r1 = new Person("Some txt", "More text");
-        r2 = new Person("aaa", "bbb");
-        try {
-            em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            em.persist(r1);
-            em.persist(r2);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
     }
 
     @Test
@@ -84,7 +72,7 @@ public class RenameMeResourceTest {
     }
 
     //This test assumes the database contains two rows
-    @Test
+    /*@Test
     public void testDummyMsg() throws Exception {
         given()
                 .contentType("application/json")
@@ -102,5 +90,5 @@ public class RenameMeResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("count", equalTo(2));
-    }
+    }*/
 }
