@@ -5,6 +5,7 @@
  */
 package utils;
 
+import entities.Person;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -16,6 +17,11 @@ public class Main {
     public static void main(String[] args) {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
+        
+        em.getTransaction().begin();
+        em.persist(new Person("email", "abed", "hariri"));
+        em.getTransaction().commit();
+        em.close();
     }
     
 }
