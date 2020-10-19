@@ -29,13 +29,14 @@ public class CityInfo implements Serializable {
     @OneToMany(mappedBy = "cityInfo")
     private List<Address> addresses;
 
+    public CityInfo() {
+    }
+    
     public CityInfo(String city, List<Address> addresses) {
         this.city = city;
         this.addresses = addresses;
     }
 
-    public CityInfo() {
-    }
 
     public int getZipCode() {
         return zipCode;

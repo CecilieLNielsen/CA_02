@@ -38,7 +38,7 @@ public class Person implements Serializable {
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Address address;
 
-    public Person(String email, String firstName, String lastName, List<Phone> phones, List<Hobby> hobbies, Address address) {
+    public Person(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,12 +46,7 @@ public class Person implements Serializable {
         this.hobbies = hobbies;
         this.address = address;
     }
-
-    public Person(String email, String firstName, String lastName) {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    
     public Person() {
     }
 

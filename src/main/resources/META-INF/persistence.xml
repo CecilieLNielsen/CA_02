@@ -2,8 +2,13 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <!-- DO NOT RENAME THE PERSISTENCE UNIT -->
   <persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
+<<<<<<< HEAD
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!--    <class>entities.RenameMe</class>-->
+=======
+    <!--    <class>entities.RenameMe</class>-->
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+>>>>>>> næsten alle endpoints er added
     <class>entities.Address</class>
     <class>entities.CityInfo</class>
     <class>entities.Hobby</class>
@@ -12,9 +17,13 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- DO NOT remove the line below. It's not set by the  entityUtils.EMF_Creator -->
+<<<<<<< HEAD
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="eclipselink.canonicalmodel.subpackage" value="xx345y657"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
+=======
+      <property name="eclipselink.canonicalmodel.subpackage" value="xx345y657"/>
+>>>>>>> næsten alle endpoints er added
       <!-- You can raise the logging level to one of the following values CONFIG, FINE, FINER, FINEST, ALL for better,
                  but also more verbose, log-info 
                  NOTE in production the values will be set to WARNING to report only potential serious problems
@@ -25,7 +34,13 @@
       <!-- In PRODUCTION the values below, will be overriden by utils.EMF_Creator -->
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/startcode"/>
       <property name="javax.persistence.jdbc.user" value="dev"/>
+<<<<<<< HEAD
       <property name="javax.persistence.jdbc.password" value="ax2"/>
+=======
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="ax2"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+>>>>>>> næsten alle endpoints er added
     </properties>
   </persistence-unit>
   <!-- Database for testing ONLY -->
