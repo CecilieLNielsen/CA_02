@@ -5,6 +5,8 @@
  */
 package DTO;
 
+import entities.Person;
+
 /**
  *
  * @author rh
@@ -15,7 +17,10 @@ public class PersonDTO {
     private String firstName;
     private String lastName;
 
-    public PersonDTO() {
+    public PersonDTO(Person person) {
+        this.email = person.getEmail();
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
     }
 
     public String getEmail() {
