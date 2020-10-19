@@ -35,14 +35,14 @@ public class Address implements Serializable {
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private CityInfo cityInfo;
 
+    public Address() {
+    }
+
     public Address(String street, String additionalInfo, List<Person> persons, CityInfo cityInfo) {
         this.street = street;
         this.additionalInfo = additionalInfo;
         this.persons = persons;
         this.cityInfo = cityInfo;
-    }
-
-    public Address() {
     }
 
     public int getId() {
