@@ -6,6 +6,7 @@
 package utils;
 
 import facades.HobbyFacade;
+import facades.PersonFacade;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -21,6 +22,10 @@ public class Main {
         
         HobbyFacade hf = HobbyFacade.getFacade(emf);
         System.out.println(hf.getCountOfPersonsWithHobby("Fodbold"));
+        
+        PersonFacade pf = PersonFacade.getFacade(emf);
+        System.out.println(pf.getPersonsByHobby("Fodbold"));
+        System.out.println(pf.getPersonByPhoneNumber("72727272"));
     }
     
 }

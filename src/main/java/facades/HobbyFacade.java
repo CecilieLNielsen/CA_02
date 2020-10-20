@@ -77,11 +77,22 @@ public class HobbyFacade {
             em.close();
         }
     }
-
-    public int getCountOfPersonsWithHobby(String hobby) {
+    
+    public Hobby getHobbyByName(String name) {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Integer> query = em.createQuery("SELECT COUNT(p) FROM Person p WHERE :hobby MEMBER OF p.hobbies.name", Integer.class).setParameter("hobby", hobby);
+            TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h WHERE h.name = :name", Hobby.class).setParameter("name", name);
+            return query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
+    public long getCountOfPersonsWithHobby(String hobbyName) {
+        EntityManager em = getEntityManager();
+        try {
+            Hobby hobby = getHobbyByName(hobbyName);
+            TypedQuery<Long> query = em.createQuery("SELECT COUNT(p) FROM Person p WHERE :hobby MEMBER OF p.hobbies", Long.class).setParameter("hobby", hobby);
             return query.getSingleResult();
         } finally {
             em.close();

@@ -1,7 +1,9 @@
 package facades;
 
 import DTO.PersonDTO;
+import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -143,32 +145,39 @@ public class PersonFacade {
         }
         return persons;
     }
-    /*
-     public PersonDTO getPersonsByHobby(String hobby){
+
+    public List<PersonDTO> getPersonsByHobby(String hobbyName) {
         EntityManager em = emf.createEntityManager();
-        try{
-            em.getTransaction().begin();
-            PersonDTO person = new PersonDTO(em.find(Person.class, id));
-            em.getTransaction().commit();
-            return person;
-        }finally{  
+        Hobby hobby = HobbyFacade.getFacade(emf).getHobbyByName(hobbyName);
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE :hobby MEMBER OF p.hobbies", Person.class).setParameter("hobby", hobby);
+        List<PersonDTO> persons = new ArrayList();
+        for (Person p : query.getResultList()) {
+            persons.add(new PersonDTO(p));
+        }
+        return persons;
+    }
+
+    public PersonDTO getPersonByPhoneNumber(String number) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            Phone phone = getPhoneByNumber(number);
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE :phone MEMBER OF p.phones", Person.class).setParameter("phone", phone);
+            return new PersonDTO(query.getSingleResult());
+        } finally {
             em.close();
         }
     }
     
-     
-       public PhoneDTO getPhoneByNumber(int id){
-        EntityManager em = emf.createEntityManager();
-        try{
-            em.getTransaction().begin();
-            PhoneDTO phDTO = new PhoneDTO(em.find(Phone.class, id));
-            em.getTransaction().commit();
-            return phDTO;
-        }finally{  
+    private Phone getPhoneByNumber(String number) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p WHERE p.number = :number", Phone.class).setParameter("number", number);
+            return query.getSingleResult();
+        } finally {
             em.close();
         }
     }
- 
+    /* 
     public String deletePhone(int number){
         EntityManager em = emf.createEntityManager();
         try{
