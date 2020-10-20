@@ -36,6 +36,10 @@ public class HobbyFacadeTest {
     private static HobbyFacade facade;
     private Hobby h1;
     private Hobby h2;
+    private Person p1;
+    private Person p2;
+    private List<Person> personlist;
+    
 
 
 
@@ -95,7 +99,33 @@ public class HobbyFacadeTest {
         List<HobbyDTO> hb = facade.getAllHobbies();
         assertEquals(2, hb.size());
     }
+    
+    @Test 
+    public void getHobbyByName() {
+        Hobby result = facade.getHobbyByName("Basketball");
+        assertEquals(result.getName(), "Basketball");
+    }
+    
+    @Test 
+    public void testEditHobby() {
+        HobbyDTO hbDTO = facade.getHobbybyid(h1.getId());
+        assertEquals("Basketball", hbDTO.getName());
+        h1.setName("baseball");
+        HobbyDTO edited = new HobbyDTO(h1);
+        HobbyDTO edit = facade.editHobby(edited);
+        HobbyDTO getEdited = facade.getHobbybyid(h1.getId());
+        
+        assertEquals("baseball", edit.getName());
+    }
+    
+    @Test
+    public void testAddHobby() {
+        
+        
+    }
    
+    
+    
     
 
 
