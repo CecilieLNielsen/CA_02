@@ -6,46 +6,19 @@
 package DTO;
 
 import entities.Phone;
+import java.io.Serializable;
 
 /**
  *
  * @author rh
  */
-public class PhoneDTO {
-    
-    
-    private int number;
+public class PhoneDTO implements Serializable {
+
+    private String number;
     private String description;
 
     public PhoneDTO(Phone phone) {
-        this.number = number;
-        this.description = description;
+        this.number = phone.getNumber();
+        this.description = phone.getDescription();
     }
-    
-//    public PhoneDTO(Phone num) {
-//        this.number = num.getNum;
-//        this.description = p.getdescription;
-//    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    
-    
- 
-    
-    
 }

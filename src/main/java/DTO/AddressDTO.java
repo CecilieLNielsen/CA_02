@@ -5,33 +5,20 @@
  */
 package DTO;
 
+import entities.Address;
+import java.io.Serializable;
+
 /**
  *
  * @author rh
  */
-public class AddressDTO {
-    
+public class AddressDTO implements Serializable {
+
     private String street;
-    private String addtional;
+    private String addtionalInfo;
 
-    public AddressDTO() {
+    public AddressDTO(Address address) {
+        this.street = address.getStreet();
+        this.addtionalInfo = address.getAdditionalInfo();
     }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getAddtional() {
-        return addtional;
-    }
-
-    public void setAddtional(String addtional) {
-        this.addtional = addtional;
-    }
-    
-    
 }

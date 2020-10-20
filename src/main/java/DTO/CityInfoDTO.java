@@ -5,34 +5,20 @@
  */
 package DTO;
 
+import entities.CityInfo;
+import java.io.Serializable;
+
 /**
  *
  * @author rh
  */
-public class CityDTO {
-    
+public class CityInfoDTO implements Serializable {
+
     private int zipCode;
     private String city;
 
-    public CityDTO() {
-    }
-
-    public int getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(int zipCode) {
+    public CityInfoDTO(CityInfo cityInfo) {
         this.zipCode = zipCode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
         this.city = city;
     }
-    
-    
-    
 }
