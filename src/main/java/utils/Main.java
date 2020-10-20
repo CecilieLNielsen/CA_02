@@ -5,6 +5,7 @@
  */
 package utils;
 
+import facades.HobbyFacade;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -16,6 +17,10 @@ public class Main {
     public static void main(String[] args) {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
+        
+        
+        HobbyFacade hf = HobbyFacade.getFacade(emf);
+        System.out.println(hf.getCountOfPersonsWithHobby("Fodbold"));
     }
     
 }

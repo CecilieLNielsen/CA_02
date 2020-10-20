@@ -5,20 +5,20 @@
  */
 package DTO;
 
-import entities.Phone;
+import entities.CityInfo;
 import java.io.Serializable;
 
 /**
  *
  * @author rh
  */
-public class PhoneDTO implements Serializable {
+public class CityInfoDTO implements Serializable {
 
-    private String number;
-    private String description;
+    private int zipCode;
+    private String city;
 
-    public PhoneDTO(Phone phone) {
-        this.number = phone.getNumber();
-        this.description = phone.getDescription();
+    public CityInfoDTO(CityInfo cityInfo) {
+        this.zipCode = zipCode;
+        this.city = city;
     }
 }

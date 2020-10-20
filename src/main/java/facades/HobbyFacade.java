@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package facades;
 
+import DTO.HobbyDTO;
+import entities.Hobby;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -16,15 +13,16 @@ import javax.persistence.TypedQuery;
  * @author hassanainali
  */
 public class HobbyFacade {
-    
+
     private static HobbyFacade instance;
     private static EntityManagerFactory emf;
-    
+
     //Private Constructor to ensure Singleton
-    private HobbyFacade() {}
-    
+    private HobbyFacade() {
+    }
+
     /**
-     * 
+     *
      * @param _emf
      * @return an instance of this facade class.
      */
@@ -39,8 +37,54 @@ public class HobbyFacade {
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
-    //TODO Remove/Change this before use
-    
-    
+
+    public List<HobbyDTO> getAllHobbies() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h", Hobby.class);
+        List<HobbyDTO> hobbies = new ArrayList();
+        for (Hobby h : query.getResultList()) {
+            hobbies.add(new HobbyDTO(h));
+        }
+        return hobbies;
+    }
+
+    public HobbyDTO addHobby(HobbyDTO hobbyDTO) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Hobby hobby = new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription());
+            em.persist(hobby);
+            em.getTransaction().commit();
+            return new HobbyDTO(hobby);
+        } finally {
+            em.close();
+        }
+    }
+
+    public HobbyDTO editHobby(HobbyDTO hobbyDTO) {
+        EntityManager em = getEntityManager();
+        Hobby hobby = em.find(Hobby.class, hobbyDTO.getId());
+
+        hobby.setDescription(hobbyDTO.getDescription());
+        hobby.setName(hobbyDTO.getName());
+
+        try {
+            em.getTransaction().begin();
+            em.merge(hobby);
+            em.getTransaction().commit();
+            return new HobbyDTO(hobby);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getCountOfPersonsWithHobby(String hobby) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Integer> query = em.createQuery("SELECT COUNT(p) FROM Person p WHERE :hobby MEMBER OF p.hobbies.name", Integer.class).setParameter("hobby", hobby);
+            return query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
 }
