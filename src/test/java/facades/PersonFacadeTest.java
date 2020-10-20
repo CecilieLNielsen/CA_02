@@ -16,14 +16,14 @@ import org.junit.jupiter.api.Test;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
-public class FacadeExampleTest {
+public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
     private static PersonFacade facade;
     private Person p1;
     private Person p2;
 
-    public FacadeExampleTest() {
+    public PersonFacadeTest() {
     }
 
     @BeforeAll
@@ -83,14 +83,28 @@ public class FacadeExampleTest {
     
     @Test
     public void testGetAll() {
-        List<PersonDTO> result = facade.allPersons();
+        List<PersonDTO> result = facade.getAllPersons();
         assertEquals(2, result.size());
     }
     
     @Test
     public void testGetById() {
         int id = p1.getId();
-        PersonDTO p = facade.getUserById(id);
+        PersonDTO p = facade.getPersonById(id);
         assertEquals("John", p.getFirstName() );
     }
+    
+    @Test
+    public void testGetByEmail() {
+        PersonDTO p = facade.getPersonByEmail("Pete@mail.com");
+        assertEquals("Pete@mail.com", p.getEmail());
+    }
+    
+    @Test
+    public void testGetByName() {
+        List<PersonDTO> p = facade.getPersonsByName("Pete", "Petersen");
+        assertEquals(1, p.size());
+    }
+    
+    
 }
