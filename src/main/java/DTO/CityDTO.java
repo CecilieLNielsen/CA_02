@@ -5,6 +5,8 @@
  */
 package DTO;
 
+import entities.CityInfo;
+
 /**
  *
  * @author rh
@@ -15,6 +17,11 @@ public class CityDTO {
     private String city;
 
     public CityDTO() {
+    }
+
+    public CityDTO(CityInfo cityInfo) {
+        this.zipCode = zipCode;
+        this.city = city;
     }
 
     public int getZipCode() {

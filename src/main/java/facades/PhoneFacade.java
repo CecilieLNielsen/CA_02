@@ -55,6 +55,7 @@ public class PhoneFacade {
             em.close();
         }
     }
+    // DRILLER
     /*
     public String addPhone(PhoneDTO phDTO){
         EntityManager em = emf.createEntityManager();
@@ -68,11 +69,11 @@ public class PhoneFacade {
         }
     }
     */
-    public String deletePhone(int id){
+    public String deletePhone(int number){
         EntityManager em = emf.createEntityManager();
         try{
             em.getTransaction().begin();
-            em.remove(em.find(Phone.class, id));
+            em.remove(em.find(Phone.class, number));
             em.getTransaction().commit();
             return "Phone deleted successfully. ";
         }finally{  
