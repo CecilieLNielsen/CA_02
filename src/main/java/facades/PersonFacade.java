@@ -205,11 +205,9 @@ public class PersonFacade {
         }
     }
 
-<<<<<<< HEAD
+
     private Phone getPhoneByNumber(String number) { // ?????
-=======
-    private Phone getPhoneByNumber(String number) {
->>>>>>> 7cf5776a9475befe5e8e17a95e04842fd9e0dd42
+
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p WHERE p.number = :number", Phone.class).setParameter("number", number);

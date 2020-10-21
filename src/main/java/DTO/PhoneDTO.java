@@ -26,7 +26,6 @@ public class PhoneDTO implements Serializable {
         return number;
     }
 
-<<<<<<< HEAD
     public void setNumber(String number) {
         this.number = number;
     }
@@ -38,11 +37,4 @@ public class PhoneDTO implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-=======
-    public String getDescription() {
-        return description;
-    }
->>>>>>> 7cf5776a9475befe5e8e17a95e04842fd9e0dd42
-    
 }

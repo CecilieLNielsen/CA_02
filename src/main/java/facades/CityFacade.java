@@ -51,9 +51,5 @@ public class CityFacade {
             em.close();
         }
     }
-<<<<<<< HEAD
-}
-=======
 
 }
->>>>>>> 7cf5776a9475befe5e8e17a95e04842fd9e0dd42
