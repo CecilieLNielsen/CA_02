@@ -3,7 +3,6 @@ package rest;
 import DTO.PersonDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import entities.Person;
 import utils.EMF_Creator;
 import facades.PersonFacade;

@@ -25,7 +25,11 @@
       <property name="javax.persistence.jdbc.user" value="dev"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="ax2"/>
+<<<<<<< HEAD
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+=======
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+>>>>>>> b5d2d3b6d3ea534859157e92cd158bd1416b64bf
     </properties>
   </persistence-unit>
   <!-- Database for testing ONLY -->
