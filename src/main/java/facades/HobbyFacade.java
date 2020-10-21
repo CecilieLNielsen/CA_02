@@ -52,6 +52,12 @@ public class HobbyFacade {
             em.close();
         }
     }
+    
+    public HobbyDTO getHobbyById(int id) {
+        EntityManager em = emf.createEntityManager();
+        Hobby hobby = em.find(Hobby.class, id);
+        return new HobbyDTO(hobby); 
+    }
 
     public HobbyDTO addHobby(HobbyDTO hobbyDTO) {
         EntityManager em = emf.createEntityManager();
