@@ -35,5 +35,4 @@ public class HobbyDTO implements Serializable {
     public String getDescription() {
         return description;
     }
-
 }

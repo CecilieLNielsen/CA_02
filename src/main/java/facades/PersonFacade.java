@@ -276,29 +276,4 @@ public class PersonFacade {
             em.close();
         }
     }
-    /* 
-    public String deletePhone(int number){
-        EntityManager em = emf.createEntityManager();
-        try{
-            em.getTransaction().begin();
-            em.remove(em.find(Phone.class, number));
-            em.getTransaction().commit();
-            return "Phone deleted successfully. ";
-        }finally{  
-            em.close();
-        }
-    }
-    
-    public List<PhoneDTO> allPhones(){
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p", Phone.class);
-        List<PhoneDTO> phones = new ArrayList();
-        for(Phone p : query.getResultList()){
-            phones.add(new PhoneDTO(p));
-        }
-        return phones;
-    }
-
-     */
-
 }
