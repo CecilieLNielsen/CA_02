@@ -72,6 +72,10 @@ public class PersonDTO implements Serializable {
         return hobbies;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
    
 
 }

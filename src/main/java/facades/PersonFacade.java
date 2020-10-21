@@ -165,6 +165,68 @@ public class PersonFacade {
         }
     }
 
+    public PersonDTO editPersonAddress(int personId, AddressDTO address) {
+        EntityManager em = getEntityManager();
+        Person person = em.find(Person.class, personId);
+        CityInfo cityInfo = em.find(CityInfo.class, address.getCityInfo().getZipCode());
+        
+        person.getAddress().setStreet(address.getStreet());
+        person.getAddress().setAdditionalInfo(address.getAddtionalInfo());
+        person.getAddress().setCityInfo(cityInfo);
+
+        try {
+            em.getTransaction().begin();
+            em.merge(person);
+            em.getTransaction().commit();
+            return new PersonDTO(person);
+        } finally {
+            em.close();
+        }
+    }
+
+    public PersonDTO editPersonPhones(int personId, List<PhoneDTO> phoneDTOs) {
+        EntityManager em = getEntityManager();
+        Person person = em.find(Person.class, personId);
+        List<Phone> oldPhones = person.getPhones();
+        List<Phone> phones = new ArrayList();
+        for (PhoneDTO phone : phoneDTOs) {
+            phones.add(new Phone(phone.getNumber(), phone.getDescription()));
+        }
+        person.setPhones(phones);
+
+        try {
+            em.getTransaction().begin();
+            for (Phone oldPhone : oldPhones) {
+                em.remove(oldPhone);
+            }
+            em.merge(person);
+            em.getTransaction().commit();
+            return new PersonDTO(person);
+        } finally {
+            em.close();
+        }
+    }
+
+    public PersonDTO editPersonHobbies(int personId, List<HobbyDTO> hobbyDTOs) {
+        EntityManager em = getEntityManager();
+        Person person = em.find(Person.class, personId);
+        
+        List<Hobby> hobbies = new ArrayList();
+        for (HobbyDTO hobby : hobbyDTOs) {
+            hobbies.add(new Hobby(hobby.getName(), hobby.getDescription()));
+        }
+        person.setHobbies(hobbies);
+
+        try {
+            em.getTransaction().begin();
+            em.merge(person);
+            em.getTransaction().commit();
+            return new PersonDTO(person);
+        } finally {
+            em.close();
+        }
+    }
+
     public List<PersonDTO> getAllPersons() {
         EntityManager em = emf.createEntityManager();
         try {

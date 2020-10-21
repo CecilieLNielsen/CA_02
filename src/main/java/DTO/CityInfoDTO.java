@@ -18,8 +18,8 @@ public class CityInfoDTO implements Serializable {
     private String city;
 
     public CityInfoDTO(CityInfo cityInfo) {
-        this.zipCode = zipCode;
-        this.city = city;
+        this.zipCode = cityInfo.getZipCode();
+        this.city = cityInfo.getCity();
     }
 
     public int getZipCode() {
