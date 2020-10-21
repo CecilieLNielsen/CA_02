@@ -51,7 +51,7 @@ public class HobbyFacadeTest {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Person p").executeUpdate();
-        em.createNativeQuery("ALTER TABLE `MEMBER` AUTO_INCREMENT = 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE `PERSON` AUTO_INCREMENT = 1").executeUpdate();
 
     }
 
@@ -90,7 +90,7 @@ public class HobbyFacadeTest {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Hobby h").executeUpdate();
-        em.createNativeQuery("ALTER TABLE `MEMBER` AUTO_INCREMENT = 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE `HOBBY` AUTO_INCREMENT = 1").executeUpdate();
         em.getTransaction().commit();
     }
 
