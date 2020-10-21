@@ -21,4 +21,22 @@ public class PhoneDTO implements Serializable {
         this.number = phone.getNumber();
         this.description = phone.getDescription();
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    
 }

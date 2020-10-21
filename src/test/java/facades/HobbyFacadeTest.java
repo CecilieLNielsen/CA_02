@@ -25,12 +25,9 @@ import utils.EMF_Creator;
  *
  * @author rh
  */
-public class HobbyFacadeTest {
-    
-
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
-
+public class HobbyFacadeTest {
 
     private static EntityManagerFactory emf;
     private static HobbyFacade facade;
@@ -38,10 +35,7 @@ public class HobbyFacadeTest {
     private Hobby h2;
     private Person p1;
     private Person p2;
-    private List<Person> personlist;
-    
-
-
+    private List<Person> personList;
 
     @BeforeAll
     public static void setUpClass() {
@@ -51,7 +45,7 @@ public class HobbyFacadeTest {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Person p").executeUpdate();
-        em.createNativeQuery("ALTER TABLE `MEMBER` AUTO_INCREMENT = 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE `HOBBY` AUTO_INCREMENT = 1").executeUpdate();
 
     }
 
@@ -64,25 +58,24 @@ public class HobbyFacadeTest {
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
-       h1 = new Hobby();
-       h1.setName("Basketball");
-       h1.setDescription("Boldsport");
-       
-       h2 = new Hobby();
-       h2.setName("Handball");
-       h2.setDescription("Boldsport");
-       
+        h1 = new Hobby();
+        h1.setName("Basketball");
+        h1.setDescription("Sport");
+
+        h2 = new Hobby();
+        h2.setName("Handball");
+        h2.setDescription("Sport");
+
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createQuery("DELETE from Hobby").executeUpdate();
+            em.createQuery("DELETE FROM Hobby h").executeUpdate();
             em.persist(h1);
             em.persist(h2);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-
     }
 
     @AfterEach
@@ -90,44 +83,47 @@ public class HobbyFacadeTest {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Hobby h").executeUpdate();
-        em.createNativeQuery("ALTER TABLE `MEMBER` AUTO_INCREMENT = 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE `HOBBY` AUTO_INCREMENT = 1").executeUpdate();
         em.getTransaction().commit();
     }
 
     @Test
-    public void getAllTest(){
+    public void testGetAllHobbies() {
         List<HobbyDTO> hb = facade.getAllHobbies();
         assertEquals(2, hb.size());
     }
-    
-    @Test 
+
+    @Test
+    public void testGetHobbyById() {
+        int id = h1.getId();
+        HobbyDTO h = facade.getHobbybyId(id);
+        assertEquals("Basketball", h.getName());
+    }
+
+    @Test
+    public void testAddHobby() {
+        
+    }
+
+    @Test
+    public void testEditHobby() {
+        HobbyDTO h = facade.getHobbybyId(h1.getId());
+        assertEquals("Basketball", h.getName());
+        h1.setName("Baseball");
+        HobbyDTO edited = new HobbyDTO(h1);
+        HobbyDTO edit = facade.editHobby(edited);
+        HobbyDTO getEdited = facade.getHobbybyId(h1.getId());
+        assertEquals("Baseball", edit.getName());
+    }
+
+    @Test
     public void getHobbyByName() {
         Hobby result = facade.getHobbyByName("Basketball");
         assertEquals(result.getName(), "Basketball");
     }
-    
-    @Test 
-    public void testEditHobby() {
-        HobbyDTO hbDTO = facade.getHobbybyid(h1.getId());
-        assertEquals("Basketball", hbDTO.getName());
-        h1.setName("baseball");
-        HobbyDTO edited = new HobbyDTO(h1);
-        HobbyDTO edit = facade.editHobby(edited);
-        HobbyDTO getEdited = facade.getHobbybyid(h1.getId());
-        
-        assertEquals("baseball", edit.getName());
-    }
-    
+
     @Test
-    public void testAddHobby() {
-        
+    public void testGetCountOfPersonsWithHobby() {
         
     }
-   
-    
-    
-    
-
-
-    
 }

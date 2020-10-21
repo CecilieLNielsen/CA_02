@@ -47,11 +47,11 @@ public class HobbyFacade {
         }
         return hobbies;
     }
-    
-    public HobbyDTO getHobbybyid(int id) {
+
+    public HobbyDTO getHobbybyId(int id) {
         EntityManager em = emf.createEntityManager();
         Hobby hobby = em.find(Hobby.class, id);
-        return new HobbyDTO(hobby); 
+        return new HobbyDTO(hobby);
     }
 
     public HobbyDTO addHobby(HobbyDTO hobbyDTO) {
@@ -83,7 +83,7 @@ public class HobbyFacade {
             em.close();
         }
     }
-    
+
     public Hobby getHobbyByName(String name) {
         EntityManager em = getEntityManager();
         try {

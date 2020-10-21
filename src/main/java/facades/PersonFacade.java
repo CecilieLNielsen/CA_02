@@ -167,8 +167,8 @@ public class PersonFacade {
             em.close();
         }
     }
-    
-    private Phone getPhoneByNumber(String number) {
+
+    private Phone getPhoneByNumber(String number) { // ?????
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Phone> query = em.createQuery("SELECT p FROM Phone p WHERE p.number = :number", Phone.class).setParameter("number", number);
