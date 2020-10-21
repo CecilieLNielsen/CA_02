@@ -107,6 +107,7 @@ public class HobbyFacadeTest {
 
     @Test
     public void testEditHobby() {
+<<<<<<< HEAD
         HobbyDTO h = facade.getHobbybyId(h1.getId());
         assertEquals("Basketball", h.getName());
         h1.setName("Baseball");
@@ -114,6 +115,16 @@ public class HobbyFacadeTest {
         HobbyDTO edit = facade.editHobby(edited);
         HobbyDTO getEdited = facade.getHobbybyId(h1.getId());
         assertEquals("Baseball", edit.getName());
+=======
+        HobbyDTO hbDTO = facade.getHobbyById(h1.getId());
+        assertEquals("Basketball", hbDTO.getName());
+        h1.setName("baseball");
+        HobbyDTO edited = new HobbyDTO(h1);
+        HobbyDTO edit = facade.editHobby(edited);
+        HobbyDTO getEdited = facade.getHobbyById(h1.getId());
+        
+        assertEquals("baseball", edit.getName());
+>>>>>>> 7cf5776a9475befe5e8e17a95e04842fd9e0dd42
     }
 
     @Test

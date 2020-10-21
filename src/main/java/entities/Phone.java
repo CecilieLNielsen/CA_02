@@ -30,10 +30,9 @@ public class Phone implements Serializable {
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Person person;
 
-    public Phone(String number, String description, Person person) {
+    public Phone(String number, String description) {
         this.number = number;
         this.description = description;
-        this.person = person;
     }
 
     public Phone() {

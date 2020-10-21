@@ -40,11 +40,20 @@ public class CityFacade {
 
     public List<CityInfoDTO> getAllCities() {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
-        List<CityInfoDTO> cities = new ArrayList();
-        for (CityInfo c : query.getResultList()) {
-            cities.add(new CityInfoDTO(c));
+        try {
+            TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
+            List<CityInfoDTO> cities = new ArrayList();
+            for (CityInfo c : query.getResultList()) {
+                cities.add(new CityInfoDTO(c));
+            }
+            return cities;
+        } finally {
+            em.close();
         }
-        return cities;
     }
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> 7cf5776a9475befe5e8e17a95e04842fd9e0dd42

@@ -29,9 +29,14 @@ public class CityInfo implements Serializable {
     @OneToMany(mappedBy = "cityInfo")
     private List<Address> addresses;
 
-    public CityInfo(String city, List<Address> addresses) {
+    public CityInfo(int zipCode, String city, List<Address> addresses) {
+        this.zipCode = zipCode;
         this.city = city;
         this.addresses = addresses;
+    }
+    public CityInfo(int zipCode, String city) {
+        this.zipCode = zipCode;
+        this.city = city;
     }
 
     public CityInfo() {

@@ -45,6 +45,16 @@ public class Person implements Serializable {
         this.phones = phones;
         this.hobbies = hobbies;
         this.address = address;
+        
+        for (Phone phone : phones) {
+            phone.setPerson(this);
+        }
+        
+        for (Hobby hobby : hobbies) {
+            hobby.getPersons().add(this);
+        }
+        
+        address.getPersons().add(this);          
     }
 
     public Person(String email, String firstName, String lastName) {
