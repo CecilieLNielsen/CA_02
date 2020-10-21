@@ -2,8 +2,8 @@ package facades;
 
 import DTO.PersonDTO;
 import entities.Hobby;
-import entities.Person;
 import entities.Phone;
+import entities.Person;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

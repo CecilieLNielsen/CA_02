@@ -6,7 +6,10 @@
 package DTO;
 
 import entities.Person;
+<<<<<<< HEAD
 import java.io.Serializable;
+=======
+>>>>>>> personFacade
 
 /**
  *
@@ -20,7 +23,10 @@ public class PersonDTO implements Serializable {
     private String lastName;
 
     public PersonDTO(Person person) {
+<<<<<<< HEAD
         this.id = person.getId();
+=======
+>>>>>>> personFacade
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
