@@ -1,6 +1,11 @@
 package facades;
 
+import DTO.AddressDTO;
+import DTO.HobbyDTO;
 import DTO.PersonDTO;
+import DTO.PhoneDTO;
+import entities.Address;
+import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
@@ -64,39 +69,63 @@ public class PersonFacade {
 
     public List<PersonDTO> getPersonsByName(String firstName, String lastName) {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.firstName = :firstName AND p.lastName = :lastName", Person.class).setParameter("firstName", firstName).setParameter("lastName", lastName);
-        List<PersonDTO> persons = new ArrayList();
-        for (Person p : query.getResultList()) {
-            persons.add(new PersonDTO(p));
+        try {
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.firstName = :firstName AND p.lastName = :lastName", Person.class).setParameter("firstName", firstName).setParameter("lastName", lastName);
+            List<PersonDTO> persons = new ArrayList();
+            for (Person p : query.getResultList()) {
+                persons.add(new PersonDTO(p));
+            }
+            return persons;
+        } finally {
+            em.close();
         }
-        return persons;
     }
 
     public List<PersonDTO> getPersonsByCity(int zipCode) {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.zipCode = :zipCode", Person.class).setParameter("zipCode", zipCode);
-        List<PersonDTO> persons = new ArrayList();
-        for (Person p : query.getResultList()) {
-            persons.add(new PersonDTO(p));
+        try {
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.zipCode = :zipCode", Person.class).setParameter("zipCode", zipCode);
+            List<PersonDTO> persons = new ArrayList();
+            for (Person p : query.getResultList()) {
+                persons.add(new PersonDTO(p));
+            }
+            return persons;
+        } finally {
+            em.close();
         }
-        return persons;
     }
 
     public List<PersonDTO> getPersonsByAddress(int zipCode, String street) {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.zipCode = :zipCode AND p.address.street = :street", Person.class).setParameter("zipCode", zipCode).setParameter("street", street);
-        List<PersonDTO> persons = new ArrayList();
-        for (Person p : query.getResultList()) {
-            persons.add(new PersonDTO(p));
+        try {
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE p.address.cityInfo.zipCode = :zipCode AND p.address.street = :street", Person.class).setParameter("zipCode", zipCode).setParameter("street", street);
+            List<PersonDTO> persons = new ArrayList();
+            for (Person p : query.getResultList()) {
+                persons.add(new PersonDTO(p));
+            }
+            return persons;
+        } finally {
+            em.close();
         }
-        return persons;
     }
 
     public PersonDTO addPerson(PersonDTO personDTO) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            Person person = new Person(personDTO.getEmail(), personDTO.getFirstName(), personDTO.getLastName());
+            List<Phone> phones = new ArrayList();
+            for (PhoneDTO phone : personDTO.getPhones()) {
+                phones.add(new Phone(phone.getNumber(), phone.getDescription()));
+            }
+            List<Hobby> hobbies = new ArrayList();
+            for (HobbyDTO hobby : personDTO.getHobbies()) {
+                hobbies.add(new Hobby(hobby.getName(), hobby.getDescription()));
+            }
+            AddressDTO addressDTO = personDTO.getAddress();
+            CityInfo cityInfo = em.find(CityInfo.class, addressDTO.getCityInfo().getZipCode());
+            Address address = new Address(addressDTO.getStreet(), addressDTO.getAddtionalInfo(), cityInfo);
+            
+            Person person = new Person(personDTO.getEmail(), personDTO.getFirstName(), personDTO.getLastName(), phones, hobbies, address);
             em.persist(person);
             em.getTransaction().commit();
             return new PersonDTO(person);
@@ -138,23 +167,31 @@ public class PersonFacade {
 
     public List<PersonDTO> getAllPersons() {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-        List<PersonDTO> persons = new ArrayList();
-        for (Person p : query.getResultList()) {
-            persons.add(new PersonDTO(p));
+        try {
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+            List<PersonDTO> persons = new ArrayList();
+            for (Person p : query.getResultList()) {
+                persons.add(new PersonDTO(p));
+            }
+            return persons;
+        } finally {
+            em.close();
         }
-        return persons;
     }
 
     public List<PersonDTO> getPersonsByHobby(String hobbyName) {
         EntityManager em = emf.createEntityManager();
-        Hobby hobby = HobbyFacade.getFacade(emf).getHobbyByName(hobbyName);
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE :hobby MEMBER OF p.hobbies", Person.class).setParameter("hobby", hobby);
-        List<PersonDTO> persons = new ArrayList();
-        for (Person p : query.getResultList()) {
-            persons.add(new PersonDTO(p));
+        try {
+            Hobby hobby = HobbyFacade.getFacade(emf).getHobbyByName(hobbyName);
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p WHERE :hobby MEMBER OF p.hobbies", Person.class).setParameter("hobby", hobby);
+            List<PersonDTO> persons = new ArrayList();
+            for (Person p : query.getResultList()) {
+                persons.add(new PersonDTO(p));
+            }
+            return persons;
+        } finally {
+            em.close();
         }
-        return persons;
     }
 
     public PersonDTO getPersonByPhoneNumber(String number) {
@@ -167,7 +204,7 @@ public class PersonFacade {
             em.close();
         }
     }
-    
+
     private Phone getPhoneByNumber(String number) {
         EntityManager em = getEntityManager();
         try {

@@ -21,4 +21,13 @@ public class CityInfoDTO implements Serializable {
         this.zipCode = zipCode;
         this.city = city;
     }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+    
 }
