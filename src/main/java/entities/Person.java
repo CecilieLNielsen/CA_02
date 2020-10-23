@@ -25,10 +25,10 @@ public class Person implements Serializable {
     private String firstName;
     private String lastName;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST})
     private List<Phone> phones;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(
             name = "PERSON_HAS_HOBBY",
             joinColumns = @JoinColumn(name = "personId"),
@@ -45,6 +45,16 @@ public class Person implements Serializable {
         this.phones = phones;
         this.hobbies = hobbies;
         this.address = address;
+        
+        for (Phone phone : phones) {
+            phone.setPerson(this);
+        }
+        
+        for (Hobby hobby : hobbies) {
+            hobby.getPersons().add(this);
+        }
+        
+        address.getPersons().add(this);          
     }
 //<<<<<<< HEAD
 //=======
@@ -56,6 +66,13 @@ public class Person implements Serializable {
 //    }
 //>>>>>>> d8e91e86c1f9179535861d4128966617c697c54a
     
+
+    public Person(String email, String firstName, String lastName) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Person() {
     }
 
@@ -96,6 +113,9 @@ public class Person implements Serializable {
     }
 
     public void setPhones(List<Phone> phones) {
+        for (Phone phone : phones) {
+            phone.setPerson(this);
+        }
         this.phones = phones;
     }
 

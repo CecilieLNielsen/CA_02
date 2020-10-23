@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +35,12 @@ public class Hobby implements Serializable {
         this.name = name;
         this.description = description;
         this.persons = persons;
+    }
+
+    public Hobby(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.persons = new ArrayList();
     }
 
     public Hobby() {

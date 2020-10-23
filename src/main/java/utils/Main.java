@@ -6,6 +6,16 @@
 package utils;
 
 import entities.Person;
+import DTO.PersonDTO;
+import entities.Address;
+import entities.CityInfo;
+import entities.Hobby;
+import entities.Person;
+import entities.Phone;
+import facades.HobbyFacade;
+import facades.PersonFacade;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -22,6 +32,26 @@ public class Main {
         em.persist(new Person("email", "abed", "hariri"));
         em.getTransaction().commit();
         em.close();
+        HobbyFacade hf = HobbyFacade.getFacade(emf);
+        PersonFacade pf = PersonFacade.getFacade(emf);
+        
+        List<Phone> phones = new ArrayList();
+        List<Hobby> hobbies = new ArrayList();
+        Address address = new Address("Gadevang 14", "Adresse 2", new CityInfo(3370, "Melby"));
+        phones.add(new Phone("34324634", "Privatnummer"));
+        hobbies.add(new Hobby("Håndbold", "Et boldspil med hånden"));
+        Person person = new Person("test@outlook.dk", "Sanne", "Larsen", phones, hobbies, address);
+        PersonDTO personDTO = new PersonDTO(person);
+        
+        // TO ADD
+        //pf.addPerson(personDTO);
+        // TO EDIT
+        personDTO.setId(10);
+        pf.editPerson(personDTO);
+        pf.editPersonAddress(personDTO.getId(), personDTO.getAddress());
+        pf.editPersonHobbies(personDTO.getId(), personDTO.getHobbies());
+        pf.editPersonPhones(personDTO.getId(), personDTO.getPhones());
+        
     }
     
 }
