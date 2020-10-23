@@ -132,9 +132,9 @@ public class PersonFacadeTest {
         p1.setHobbies(hobbies);
         h1.setPersons(persons);
         
-        List<Phone> phones = new ArrayList();
-        phones.add(ph1);
-        p1.setPhones(phones);
+    //    List<Phone> phones = new ArrayList();
+    //    phones.add(ph1);
+    //    p1.setPhones(phones);
     //    ph1.setPerson(p1);
         
         EntityManager em = emf.createEntityManager();
@@ -144,13 +144,13 @@ public class PersonFacadeTest {
             em.createQuery("DELETE FROM Address a").executeUpdate();
             em.createQuery("DELETE FROM CityInfo c").executeUpdate();
             em.createQuery("DELETE FROM Hobby h").executeUpdate();
-            em.createQuery("DELETE FROM Phone p").executeUpdate();
+          //  em.createQuery("DELETE FROM Phone p").executeUpdate();
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
             em.persist(a1);
             em.persist(h1);
-            em.persist(ph1);
+          //  em.persist(ph1);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -165,7 +165,7 @@ public class PersonFacadeTest {
         em.createQuery("DELETE FROM Address a").executeUpdate();
         em.createQuery("DELETE FROM CityInfo c").executeUpdate();
         em.createQuery("DELETE FROM Hobby h").executeUpdate();  
-        em.createQuery("DELETE FROM Phone p").executeUpdate();
+    //    em.createQuery("DELETE FROM Phone p").executeUpdate();
         em.createNativeQuery("ALTER TABLE `PERSON` AUTO_INCREMENT = 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE `CITYINFO` AUTO_INCREMENT = 1").executeUpdate();
         em.getTransaction().commit();
