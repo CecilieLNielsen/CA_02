@@ -75,7 +75,6 @@ public class HobbyFacade {
     public HobbyDTO editHobby(HobbyDTO hobbyDTO) {
         EntityManager em = getEntityManager();
         Hobby hobby = em.find(Hobby.class, hobbyDTO.getId());
-
         hobby.setDescription(hobbyDTO.getDescription());
         hobby.setName(hobbyDTO.getName());
 
