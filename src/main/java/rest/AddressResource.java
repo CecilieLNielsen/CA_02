@@ -32,7 +32,7 @@ import utils.EMF_Creator;
 public class AddressResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();   
-    private static final PersonFacade FACADE =  PersonFacade.getFacadeExample(EMF);
+    //private static final PersonFacade FACADE =  AddressFacade.  ;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
 

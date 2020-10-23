@@ -8,6 +8,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.Person;
+import facades.CityFacade;
 import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.Context;
@@ -32,7 +33,7 @@ import utils.EMF_Creator;
 public class CityResource {
 
    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();   
-    private static final PersonFacade FACADE =  PersonFacade.getFacadeExample(EMF);
+    private static final CityFacade FACADE =  CityFacade.getFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
             
 

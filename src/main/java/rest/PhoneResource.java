@@ -30,7 +30,7 @@ import utils.EMF_Creator;
 public class PhoneResource {
     
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();   
-    private static final PersonFacade FACADE =  PersonFacade.getFacadeExample(EMF);
+    //private static final PersonFacade FACADE =  (EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
