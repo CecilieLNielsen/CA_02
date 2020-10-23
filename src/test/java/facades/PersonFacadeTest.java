@@ -58,20 +58,11 @@ public class PersonFacadeTest {
     @BeforeEach
     public void setUp() {
 
-        p1 = new Person();
-        p1.setEmail("john@email.dk");
-        p1.setFirstName("John");
-        p1.setLastName("Johnson");
+        p1 = new Person("john@email.dk", "John", "Johnson");
 
-        p2 = new Person();
-        p2.setEmail("pete@mail.com");
-        p2.setFirstName("Pete");
-        p2.setLastName("Petersen");
+        p2 = new Person("pete@mail.com", "Pete", "Petersen");
 
-        p3 = new Person();
-        p3.setEmail("casperlund@mail.dk");
-        p3.setFirstName("Casper");
-        p3.setLastName("Lund");
+        p3 = new Person("casperlund@mail.dk", "Casper", "Lund");
 
         a1 = new Address();
         a1.setStreet("Lyngbyvej");
@@ -122,21 +113,27 @@ public class PersonFacadeTest {
         ph3.setNumber("3333");
 
         List<Person> persons = new ArrayList();
+        List<Person> persons2 = new ArrayList();
+        persons2.add(p2);
+        persons2.add(p3);
         persons.add(p1);
         a1.setPersons(persons);
+        a2.setPersons(persons2);
         p1.setAddress(a1);
         a1.setCityInfo(c1);
-        
+        p2.setAddress(a2);
+        p3.setAddress(a3);
+        a1.setCityInfo(c2);
+
         List<Hobby> hobbies = new ArrayList();
         hobbies.add(h1);
         p1.setHobbies(hobbies);
         h1.setPersons(persons);
-        
-        List<Phone> phones = new ArrayList();
-        phones.add(ph1);
-        p1.setPhones(phones);
-    //    ph1.setPerson(p1);
-        
+
+        //    List<Phone> phones = new ArrayList();
+        //    phones.add(ph1);
+        //    p1.setPhones(phones);
+        //    ph1.setPerson(p1);
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -144,13 +141,14 @@ public class PersonFacadeTest {
             em.createQuery("DELETE FROM Address a").executeUpdate();
             em.createQuery("DELETE FROM CityInfo c").executeUpdate();
             em.createQuery("DELETE FROM Hobby h").executeUpdate();
-            em.createQuery("DELETE FROM Phone p").executeUpdate();
+            //  em.createQuery("DELETE FROM Phone p").executeUpdate();
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
             em.persist(a1);
             em.persist(h1);
-            em.persist(ph1);
+            em.persist(a2);
+            //  em.persist(ph1);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -165,7 +163,7 @@ public class PersonFacadeTest {
         em.createQuery("DELETE FROM Address a").executeUpdate();
         em.createQuery("DELETE FROM CityInfo c").executeUpdate();
         em.createQuery("DELETE FROM Hobby h").executeUpdate();  
-        em.createQuery("DELETE FROM Phone p").executeUpdate();
+        //    em.createQuery("DELETE FROM Phone p").executeUpdate();
         em.createNativeQuery("ALTER TABLE `PERSON` AUTO_INCREMENT = 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE `CITYINFO` AUTO_INCREMENT = 1").executeUpdate();
         em.getTransaction().commit();
@@ -177,7 +175,8 @@ public class PersonFacadeTest {
         PersonDTO result = facade.getPersonById(id);
         assertEquals("John", result.getFirstName());
     }
-/*
+
+    /*
     @Test
     public void testGetPersonByEmail() {
         PersonDTO result = facade.getPersonByEmail("pete@mail.com");
@@ -189,7 +188,7 @@ public class PersonFacadeTest {
         List<PersonDTO> result = facade.getPersonsByName("Pete", "Petersen");
         assertEquals(1, result.size());
     }
-*/
+     */
     @Test // HALVFÆRDIG
     public void testGetPersonsByCity() {
         List<PersonDTO> result = facade.getPersonsByCity(p1.getAddress().getCityInfo().getZipCode()); // Skal gerne være 2800.
@@ -206,26 +205,26 @@ public class PersonFacadeTest {
 
     @Test // OK!!!
     public void testAddPerson() {
-        
+
     }
 
     @Test // OK!!!
     public void testDeletePerson() {
-        
+
     }
 
     @Test // OK!!!
     public void testEditPerson() {
-        
+
     }
-/*
-    @Test // OK!!!
-    public void testGetAllPersons() {
-        List<PersonDTO> result = facade.getAllPersons();
-        assertTrue(result.size() == 3);
-        //    assertEquals(3, result.size());
-    }
-*/
+
+//    @Test // OK!!!
+//    public void testGetAllPersons() {
+//        List<PersonDTO> result = facade.getAllPersons();
+//        assertEquals(3, result.size());
+//        
+//    }
+
     @Test // OK!!!
     public void testGetPersonsByHobby() {
         List<PersonDTO> result = facade.getPersonsByHobby("Basketball");
@@ -242,5 +241,5 @@ public class PersonFacadeTest {
     public void testGetPhoneByNumber() {
 
     }
-*/
+     */
 }

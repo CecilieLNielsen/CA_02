@@ -231,10 +231,12 @@ public class PersonFacade {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+            List<Person> res = query.getResultList();
             List<PersonDTO> persons = new ArrayList();
-            for (Person p : query.getResultList()) {
+            for (Person p : res) {
                 persons.add(new PersonDTO(p));
             }
+            System.out.println("Size persons" + persons.size());
             return persons;
         } finally {
             em.close();

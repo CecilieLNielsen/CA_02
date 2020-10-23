@@ -25,7 +25,6 @@ public class Main {
     public static void main(String[] args) {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
-        
         HobbyFacade hf = HobbyFacade.getFacade(emf);
         PersonFacade pf = PersonFacade.getFacade(emf);
         

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package facades;
 
 import DTO.HobbyDTO;
@@ -33,6 +28,7 @@ public class HobbyFacadeTest {
     private static HobbyFacade facade;
     private Hobby h1;
     private Hobby h2;
+    private Hobby h3;
     private Person p1;
     private Person p2;
     private List<Person> personList;
@@ -44,6 +40,7 @@ public class HobbyFacadeTest {
         facade = HobbyFacade.getFacade(emf);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
+        em.createQuery("DELETE FROM Hobby h").executeUpdate();
         em.createQuery("DELETE FROM Person p").executeUpdate();
         em.createNativeQuery("ALTER TABLE `PERSON` AUTO_INCREMENT = 1").executeUpdate();
     }
@@ -57,6 +54,7 @@ public class HobbyFacadeTest {
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
     public void setUp() {
+        p1 = new Person();
         h1 = new Hobby();
         h1.setName("Basketball");
         h1.setDescription("Sport");
@@ -65,12 +63,21 @@ public class HobbyFacadeTest {
         h2.setName("Handball");
         h2.setDescription("Sport");
 
+        p1.setFirstName("The");
+        p1.setLastName("Basketball player");
+        List<Hobby> hobbies = new ArrayList();
+        hobbies.add(h1);
+
+        p1.setHobbies(hobbies);
+
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Hobby h").executeUpdate();
+            em.createQuery("DELETE FROM Person p").executeUpdate();
             em.persist(h1);
             em.persist(h2);
+            em.persist(p1);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -82,6 +89,7 @@ public class HobbyFacadeTest {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Hobby h").executeUpdate();
+         em.createQuery("DELETE FROM Person p").executeUpdate();
         em.createNativeQuery("ALTER TABLE `HOBBY` AUTO_INCREMENT = 1").executeUpdate();
         em.getTransaction().commit();
     }
@@ -101,7 +109,18 @@ public class HobbyFacadeTest {
 
     @Test
     public void testAddHobby() {
+        h3 = new Hobby();
+        h3.setName("Bowling");
+        h3.setDescription("Hit the pins");
+        h3.setId(3);
+        HobbyDTO addThis = new HobbyDTO(h3);
+        facade.addHobby(addThis);
+        HobbyDTO getNew = facade.getHobbyById(h3.getId());
+        assertEquals("Bowling", getNew.getName());
+        assertEquals("Hit the pins", getNew.getDescription());
+                
         
+
     }
 
     @Test
@@ -112,7 +131,7 @@ public class HobbyFacadeTest {
         HobbyDTO edited = new HobbyDTO(h1);
         HobbyDTO edit = facade.editHobby(edited);
         HobbyDTO getEdited = facade.getHobbyById(h1.getId());
-        assertEquals("baseball", edit.getName());
+        assertEquals("baseball", getEdited.getName());
     }
 
     @Test
@@ -123,6 +142,7 @@ public class HobbyFacadeTest {
 
     @Test
     public void testGetCountOfPersonsWithHobby() {
-        
+        long count = facade.getCountOfPersonsWithHobby("Basketball");
+        assertEquals(1, count);
     }
 }
