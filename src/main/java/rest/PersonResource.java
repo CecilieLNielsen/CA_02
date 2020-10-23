@@ -3,7 +3,6 @@ package rest;
 import DTO.PersonDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import entities.Person;
 import utils.EMF_Creator;
 import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
@@ -78,6 +77,13 @@ public class PersonResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String deletePerson(@PathParam("id") int id) {
         return GSON.toJson(FACADE.deletePerson(id));
+    }
+    
+    @GET
+    @Path("/hobby/{hobby}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAllPersonsByHobby(@PathParam("hobby") String hobby) {
+        return GSON.toJson(FACADE.getPersonsByHobby(hobby));
     }
     
     @GET
