@@ -24,6 +24,8 @@ import utils.EMF_Creator;
  *
  * @author rh
  */
+//Uncomment the line below, to temporarily disable this test
+//@Disabled
 public class CityInfoFacadeTest {
 
     private static EntityManagerFactory emf;
@@ -55,23 +57,22 @@ public class CityInfoFacadeTest {
     public void setUp() {
         c1 = new CityInfo();
         c2 = new CityInfo();
-        c1.setCity("Køge");
-        c1.setZipCode(2830);
+        c1.setCity("Gentofte");
+        c1.setZipCode(2820);
         
-        c2.setCity("Virum");
+        c2.setCity("Holte");
         c2.setZipCode(2840);
       
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createQuery("DELETE from CityInfo c").executeUpdate();
+            em.createQuery("DELETE FROM CityInfo c").executeUpdate();
             em.persist(c1);
             em.persist(c2);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-
     }
 
     @AfterEach
@@ -83,15 +84,9 @@ public class CityInfoFacadeTest {
         em.getTransaction().commit();
     }
 
-    
     @Test
-    public void testGetAll() {
+    public void testGetAllCitites() {
         List<CityInfoDTO> result = facade.getAllCities();
         assertEquals(2, result.size());
     }
-
-    
-    
 }
-
-

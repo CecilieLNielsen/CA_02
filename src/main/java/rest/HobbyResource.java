@@ -41,7 +41,7 @@ public class HobbyResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getHobbyById(@PathParam("id") int id) {
-        return GSON.toJson(FACADE.getHobbybyid(id));
+        return GSON.toJson(FACADE.getHobbyById(id));
     }
     
     @GET

@@ -40,18 +40,23 @@ public class HobbyFacade {
 
     public List<HobbyDTO> getAllHobbies() {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h", Hobby.class);
-        List<HobbyDTO> hobbies = new ArrayList();
-        for (Hobby h : query.getResultList()) {
-            hobbies.add(new HobbyDTO(h));
+        try {
+            TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h", Hobby.class);
+            List<HobbyDTO> hobbies = new ArrayList();
+            for (Hobby h : query.getResultList()) {
+                hobbies.add(new HobbyDTO(h));
+            }
+
+            return hobbies;
+        } finally {
+            em.close();
         }
-        return hobbies;
     }
     
-    public HobbyDTO getHobbybyid(int id) {
+    public HobbyDTO getHobbyById(int id) {
         EntityManager em = emf.createEntityManager();
         Hobby hobby = em.find(Hobby.class, id);
-        return new HobbyDTO(hobby); 
+        return new HobbyDTO(hobby);
     }
 
     public HobbyDTO addHobby(HobbyDTO hobbyDTO) {
@@ -83,7 +88,7 @@ public class HobbyFacade {
             em.close();
         }
     }
-    
+
     public Hobby getHobbyByName(String name) {
         EntityManager em = getEntityManager();
         try {

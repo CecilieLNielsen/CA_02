@@ -4,8 +4,16 @@
  * and open the template in the editor.
  */
 package utils;
+import DTO.PersonDTO;
+import entities.Address;
+import entities.CityInfo;
+import entities.Hobby;
+import entities.Person;
+import entities.Phone;
 import facades.HobbyFacade;
 import facades.PersonFacade;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -18,13 +26,26 @@ public class Main {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
         
-        
         HobbyFacade hf = HobbyFacade.getFacade(emf);
-        System.out.println(hf.getCountOfPersonsWithHobby("Fodbold"));
-        
         PersonFacade pf = PersonFacade.getFacade(emf);
-        System.out.println(pf.getPersonsByHobby("Fodbold"));
-        System.out.println(pf.getPersonByPhoneNumber("72727272"));
+        
+        List<Phone> phones = new ArrayList();
+        List<Hobby> hobbies = new ArrayList();
+        Address address = new Address("Gadevang 14", "Adresse 2", new CityInfo(3370, "Melby"));
+        phones.add(new Phone("34324634", "Privatnummer"));
+        hobbies.add(new Hobby("Håndbold", "Et boldspil med hånden"));
+        Person person = new Person("test@outlook.dk", "Sanne", "Larsen");
+        PersonDTO personDTO = new PersonDTO(person);
+        
+        // TO ADD
+        //pf.addPerson(personDTO);
+        // TO EDIT
+        personDTO.setId(10);
+        pf.editPerson(personDTO);
+        pf.editPersonAddress(personDTO.getId(), personDTO.getAddress());
+        pf.editPersonHobbies(personDTO.getId(), personDTO.getHobbies());
+        pf.editPersonPhones(personDTO.getId(), personDTO.getPhones());
+        
     }
     
 }

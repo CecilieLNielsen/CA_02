@@ -27,13 +27,12 @@ public class Phone implements Serializable {
     private String number;
     private String description;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne
     private Person person;
 
-    public Phone(String number, String description, Person person) {
+    public Phone(String number, String description) {
         this.number = number;
         this.description = description;
-        this.person = person;
     }
 
     public Phone() {
