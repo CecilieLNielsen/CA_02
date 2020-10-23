@@ -48,7 +48,7 @@ public class PersonResource {
     @GET
     @Path("/firstName/{firstName}/lastName/{lastName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPersonByNames(@PathParam("fristname") String firstName, @PathParam("lastName") String lastName){
+    public String getPersonByNames(@PathParam("fristName") String firstName, @PathParam("lastName") String lastName){
         return GSON.toJson(FACADE.getPersonsByName(firstName, lastName));
     }
     
@@ -62,7 +62,7 @@ public class PersonResource {
     @GET
     @Path("/zip/{zip}/street/{street}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPersonByCity(@PathParam("zip") int zip, @PathParam("street") String street){
+    public String getPersonByCityAndStreet(@PathParam("zip") int zip, @PathParam("street") String street){
         return GSON.toJson(FACADE.getPersonsByAddress(zip, street));
     }
 
@@ -83,14 +83,14 @@ public class PersonResource {
     @GET
     @Path("/phone/{number}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPersonAll(@PathParam("phone") String number) {
+    public String getPersonByPhoneNumber(@PathParam("phone") String number) {
         return GSON.toJson(FACADE.getPersonByPhoneNumber(number));
     }
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String save(PersonDTO pDTO) {
+    public String addPerson(PersonDTO pDTO) {
         return GSON.toJson(FACADE.addPerson(pDTO));
     }
     

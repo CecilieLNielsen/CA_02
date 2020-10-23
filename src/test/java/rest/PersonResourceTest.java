@@ -14,6 +14,8 @@ import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +24,11 @@ import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
 
-public class RenameMeResourceTest {
+public class PersonResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
-    private static Person r1, r2;
+    private static Person p1, p2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -42,6 +44,10 @@ public class RenameMeResourceTest {
         //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.createQuery("DELETE FROM Person p").executeUpdate();
+        em.createNativeQuery("ALTER TABLE `PERSON` AUTO_INCREMENT = 1").executeUpdate();
 
         httpServer = startServer();
         //Setup RestAssured
@@ -63,6 +69,28 @@ public class RenameMeResourceTest {
     //TODO -- Make sure to change the EntityClass used below to use YOUR OWN (renamed) Entity class
     @BeforeEach
     public void setUp() {
+     p1 = new Person();
+      
+        p1.setEmail("john@email.dk");
+        p1.setFirstName("John");
+        p1.setLastName("JOhnson");
+
+        p2 = new Person();
+        p2.setEmail("Pete@mail.com");
+        p2.setFirstName("Pete");
+        p2.setLastName("Petersen");
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE from Person").executeUpdate();
+            em.createNativeQuery("ALTER TABLE `PERSON` AUTO_INCREMENT = 1").executeUpdate();
+            em.persist(p1);
+            em.persist(p2);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }   
     }
 
     @Test
@@ -70,25 +98,74 @@ public class RenameMeResourceTest {
         System.out.println("Testing is server UP");
         given().when().get("/person").then().statusCode(200);
     }
-
-    //This test assumes the database contains two rows
-    /*@Test
-    public void testDummyMsg() throws Exception {
-        given()
-                .contentType("application/json")
-                .get("/xxx/").then()
-                .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("msg", equalTo("Hello World"));
-    }
-
+    
     @Test
-    public void testCount() throws Exception {
-        given()
+    public void getPersonByIdTest(){
+       given()
                 .contentType("application/json")
-                .get("/xxx/count").then()
+                .get("/person/{id}", p1.getId())
+                .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("count", equalTo(2));
-    }*/
+                .body("id", equalTo(p1.getId()));
+                 
+        
+    }
+    
+    @Test
+    public void getPersonByEmailTest(){
+        given()
+                .contentType("application/json")
+                .get("/person/email/{email}", p1.getEmail())
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("email", equalTo("john@email.dk"));
+    }
+    
+    @Test
+    public void getPersonByNamesTest(){
+        given()
+                .contentType("application/json")
+                .get("/person/firstName/{firstName}/lastName/{lastName}", p1.getFirstName(), p1.getLastName())
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("id", equalTo(1));
+    }
+    
+    @Test
+    public void getPersonByCityTest(){
+        
+    }
+    
+    @Test
+    public void getPersonByCityAndStreetTest(){
+        
+    }
+    
+    @Test
+    public void getPersonAllTest(){
+        
+    }
+    
+    @Test
+    public void deletePersonTest(){
+        
+    }
+    
+    @Test
+    public void getPersonByPhoneNumberTest(){
+        
+    }
+    
+    @Test
+    public void addPersonTest(){
+        
+    }
+    
+    @Test
+    public void editPersonTest(){
+        
+    }
 }
