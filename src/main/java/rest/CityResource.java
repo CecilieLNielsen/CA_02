@@ -38,6 +38,12 @@ public class CityResource {
             
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String forTest(){
+        return "\"{msg}\" : \"{This is working}\"";
+    }
+    
+    @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllCities(){

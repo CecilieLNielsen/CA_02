@@ -33,6 +33,12 @@ public class HobbyResource {
     private UriInfo context;
     
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String forTest(){
+        return "\"{msg}\" : \"{This is working}\"";
+    }
+    
+    @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getHobbyById(@PathParam("id") int id) {

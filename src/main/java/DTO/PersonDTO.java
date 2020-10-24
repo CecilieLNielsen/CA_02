@@ -42,7 +42,7 @@ public class PersonDTO implements Serializable {
             this.hobbies.add(new HobbyDTO(hobby));
         }
     }
-
+    
     public int getId() {
         return id;
     }

@@ -12,7 +12,6 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- DO NOT remove the line below. It's not set by the  entityUtils.EMF_Creator -->
-      <property name="eclipselink.canonicalmodel.subpackage" value="xx345y657"/>
       <!-- You can raise the logging level to one of the following values CONFIG, FINE, FINER, FINEST, ALL for better,
                  but also more verbose, log-info 
                  NOTE in production the values will be set to WARNING to report only potential serious problems

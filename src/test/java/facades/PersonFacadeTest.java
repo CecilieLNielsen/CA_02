@@ -218,12 +218,11 @@ public class PersonFacadeTest {
 
     }
 
-//    @Test // OK!!!
-//    public void testGetAllPersons() {
-//        List<PersonDTO> result = facade.getAllPersons();
-//        assertEquals(3, result.size());
-//        
-//    }
+    /*@Test // OK!!!
+    public void testGetAllPersons() {
+       List<PersonDTO> result = facade.getAllPersons();
+       assertEquals(3, result.size());  
+    }*/
 
     @Test // OK!!!
     public void testGetPersonsByHobby() {
