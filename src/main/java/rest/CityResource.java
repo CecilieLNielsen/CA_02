@@ -31,6 +31,9 @@ import utils.EMF_Creator;
  */
 @Path("city")
 public class CityResource {
+    
+    @Context
+    private UriInfo context;
 
    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();   
     private static final CityFacade FACADE =  CityFacade.getFacade(EMF);

@@ -22,24 +22,22 @@ public class PersonDTO implements Serializable {
     private String firstName;
     private String lastName;
     private AddressDTO address;
-    private List <PhoneDTO> phones;
-    private List <HobbyDTO> hobbies;
+    private List<PhoneDTO> phones = new ArrayList();
+    private List<HobbyDTO> hobbies = new ArrayList();;
 
     public PersonDTO(Person person) {
         this.id = person.getId();
         this.email = person.getEmail();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
-        this.address = new AddressDTO(person.getAddress());
-        this.phones = new ArrayList();
-        this.hobbies = new ArrayList();
+        this.address = new AddressDTO(person.getAddress());    
         
         for (Phone phone : person.getPhones()) {
-            this.phones.add(new PhoneDTO(phone));
+            phones.add(new PhoneDTO(phone));
         }
         
         for (Hobby hobby : person.getHobbies()) {
-            this.hobbies.add(new HobbyDTO(hobby));
+            hobbies.add(new HobbyDTO(hobby));
         }
     }
     
@@ -75,6 +73,8 @@ public class PersonDTO implements Serializable {
         this.id = id;
     }
 
-   
-
+    @Override
+    public String toString() {
+        return "PersonDTO{" + "id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", phones=" + phones + ", hobbies=" + hobbies + '}';
+    }
 }

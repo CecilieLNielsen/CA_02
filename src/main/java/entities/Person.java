@@ -125,4 +125,9 @@ public class Person implements Serializable {
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" + "id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", phones=" + phones + ", hobbies=" + hobbies + ", address=" + address + '}';
+    }
+
 }

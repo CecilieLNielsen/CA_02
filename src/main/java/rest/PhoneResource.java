@@ -29,12 +29,13 @@ import utils.EMF_Creator;
 @Path("phone")
 public class PhoneResource {
     
+    @Context
+    private UriInfo context;
+    
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();   
     //private static final PersonFacade FACADE =  (EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    @Context
-    private UriInfo context;
     
     @GET
     @Path("/{id}")

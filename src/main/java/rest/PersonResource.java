@@ -14,11 +14,16 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
 //Todo Remove or change relevant parts before ACTUAL use
 @Path("person")
 public class PersonResource {
+    
+    @Context
+    private UriInfo context;
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();     
     private static final PersonFacade FACADE =  PersonFacade.getFacade(EMF);
@@ -47,7 +52,7 @@ public class PersonResource {
     @GET
     @Path("/firstName/{firstName}/lastName/{lastName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPersonByNames(@PathParam("fristName") String firstName, @PathParam("lastName") String lastName){
+    public String getPersonByNames(@PathParam("firstName") String firstName, @PathParam("lastName") String lastName){
         return GSON.toJson(FACADE.getPersonsByName(firstName, lastName));
     }
     

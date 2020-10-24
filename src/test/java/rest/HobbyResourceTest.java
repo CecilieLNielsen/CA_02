@@ -28,6 +28,7 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -131,8 +132,7 @@ public class HobbyResourceTest {
         given().when().get("/hobby").then().statusCode(200);
     }
     
-    //Virker ikke
-    /*@Test 
+    @Test 
     public void testGetAllHobbies() {
         given()
                 .contentType("application/json")
@@ -140,8 +140,8 @@ public class HobbyResourceTest {
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("Hobby", hasItems(2));
-    }*/
+                .body("Hobby", hasSize(2));
+    }
 
     @Test
     public void testGetHobbyById() {
