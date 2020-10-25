@@ -26,7 +26,7 @@ public class PersonFacadeTest {
     private static EntityManagerFactory emf;
     private static PersonFacade facade;
 
-    private Person p1, p2, p3;
+    private Person p1, p2, p3, p4;
     private Address a1, a2, a3;
     private CityInfo c1, c2, c3;
     private Hobby h1, h2, h3;
@@ -144,7 +144,7 @@ public class PersonFacadeTest {
      */
     @Test // HALVFÆRDIG
     public void testGetPersonsByCity() {
-        List<PersonDTO> result = facade.getPersonsByCity(p1.getAddress().getCityInfo().getZipCode()); // Skal gerne være 2800.
+        List<PersonDTO> result = facade.getPersonsByCity(p1.getAddress().getCityInfo().getZipCode()); // Skal gerne være 2800. kan ikke med 2800 kan kun hvis vi bruger post nr på denne måde
         assertEquals(1, result.size());
     }
 
@@ -155,10 +155,18 @@ public class PersonFacadeTest {
         assertEquals(1, result.size());
     }
 
-    @Test // OK!!!
-    public void testAddPerson() {
-
-    }
+//    @Test // OK!!!
+//    public void testAddPerson() {
+//        p4.setFirstName("Jamie");
+//        p4.setLastName("Jamieson");
+//        p4.setEmail("jamie@jamieson.dk");
+//        p4.setId(4);
+//        PersonDTO p4DTO = new PersonDTO(p4);
+//        facade.addPerson(p4DTO);
+//        PersonDTO added = facade.getPersonByEmail(p4.getEmail());
+//        assertEquals("jamie@jamieson", added.getEmail());
+//        
+//    }
 
     @Test // OK!!!
     public void testDeletePerson() {
@@ -167,6 +175,7 @@ public class PersonFacadeTest {
 
     @Test // OK!!!
     public void testEditPerson() {
+        
 
     }
 
