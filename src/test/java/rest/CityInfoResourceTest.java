@@ -49,7 +49,6 @@ public class CityInfoResourceTest {
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
-    private static CityFacade facade;
     
     private CityInfo c1, c2;
 
@@ -60,8 +59,8 @@ public class CityInfoResourceTest {
 
     @BeforeAll
     public static void setUpClass() {
+        EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        facade = CityFacade.getFacade(emf);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("DELETE FROM CityInfo c").executeUpdate();

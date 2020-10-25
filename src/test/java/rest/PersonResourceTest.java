@@ -43,7 +43,6 @@ public class PersonResourceTest {
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
-    private static PersonFacade facade;
 
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
@@ -52,8 +51,8 @@ public class PersonResourceTest {
 
     @BeforeAll
     public static void setUpClass() {
+        EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        facade = PersonFacade.getFacade(emf);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         deleteTables(em);

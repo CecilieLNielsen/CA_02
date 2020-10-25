@@ -50,7 +50,6 @@ public class HobbyResourceTest {
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
-    private static HobbyFacade facade;
 
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
@@ -59,8 +58,8 @@ public class HobbyResourceTest {
 
     @BeforeAll
     public static void setUpClass() {
+        EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-        facade = HobbyFacade.getFacade(emf);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Hobby h").executeUpdate();
